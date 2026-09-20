@@ -1,0 +1,8 @@
+# Symptom: docker ps says Up, but curl localhost:3000 gets nothing.
+# Read the first line of docker logs very carefully.
+FROM node:20-alpine
+WORKDIR /app
+COPY . .
+ENV GREETING=hello
+EXPOSE 3000
+CMD ["node", "app.js"]
