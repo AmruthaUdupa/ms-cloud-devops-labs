@@ -17,10 +17,11 @@ export class ValidationError extends Error {}
  * Throws ValidationError when the input cannot be repaired.
  */
 export function buildNote(input: NoteInput, now: Date = new Date()): Note {
-  const title = typeof input.title === 'string' ? input.title : '';
+  // Add .trim() right here to clear out whitespace
+  const title = typeof input.title === 'string' ? input.title.trim() : '';
   const body = typeof input.body === 'string' ? input.body.trim() : '';
 
-  if (title.length == 0) throw new ValidationError('title is required');
+  if (title.length === 0) throw new ValidationError('title is required');
   if (title.length > 80) throw new ValidationError('title must be 80 characters or fewer');
 
   return {
@@ -30,7 +31,6 @@ export function buildNote(input: NoteInput, now: Date = new Date()): Note {
     createdAt: now.toISOString()
   };
 }
-
 /** Newest first, which is the order the UI expects. */
 export function sortNotes(notes: Note[]): Note[] {
   return [...notes].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
