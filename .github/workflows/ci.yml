@@ -25,6 +25,8 @@ jobs:
 
   docker:
     # No point building an image from code that is already known to be broken.
+          - run: docker build --build-arg API_URL=http://localhost:3000 -t notes-frontend:${{ github.sha }} ./frontend
+
     needs: test
     runs-on: ubuntu-latest
     steps:
